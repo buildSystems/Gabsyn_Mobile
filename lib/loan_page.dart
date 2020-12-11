@@ -10,6 +10,8 @@ import 'constants.dart';
 import 'dart:convert' as convert;
 import 'functions.dart';
 import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 class LoanPage extends StatefulWidget{
   @override
@@ -204,6 +206,439 @@ class LoanState extends State<LoanPage>{
 
   //Now the settings page
 
+  //pertaining to files upload
+  var photoFile = null;
+  var governmentIDFile = null;
+  var companyID = null;
+  var utilityBill = null;
+  var shopFile = null;
+  var shopReceipt = null;
+  var stockPhoto = null;
+  var signature = null;
+
+  Widget _setPhotoFile(){
+    if (photoFile != null) {
+      return CircleAvatar(
+          radius: 75,
+          backgroundImage: FileImage(photoFile)
+      ); Image.file(photoFile, width: 200, height: 200);
+    } else {
+      return CircleAvatar(
+          radius: 75,
+          backgroundImage: AssetImage('assets/images/photo.jpg')
+      );
+
+    }
+  }
+
+  Widget _setGovernmentIDFile(){
+    if (governmentIDFile != null) {
+      return Image.file(governmentIDFile, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/id_card.jpg', width: 200);
+    }
+  }
+
+  Widget _setCompanyID(){
+    if (companyID != null) {
+      return Image.file(companyID, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/id_card.jpg', width: 200);
+    }
+  }
+
+  Widget _setUtilityBill(){
+    if (utilityBill != null) {
+      return Image.file(utilityBill, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/utility_bill.png', width: 200);
+    }
+  }
+
+  Widget _setShopFile(){
+    if (shopFile != null) {
+      return Image.file(shopFile, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/shop_icon.png', width: 200);
+    }
+  }
+
+  Widget _setShopReceiptFile(){
+    if (shopReceipt != null) {
+      return Image.file(shopReceipt, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/receipt.jpg', width: 200);
+    }
+  }
+
+  Widget _setStockPhotoFile(){
+    if (stockPhoto != null) {
+      return Image.file(stockPhoto, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/stock.png', width: 200);
+    }
+  }
+
+  Widget _setSignatureFile(){
+    if (signature != null) {
+      return Image.file(signature, width: 200, height: 150);
+    } else {
+      return  Image.asset('assets/images/signature.png', width: 200);
+    }
+  }
+
+  void _openGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      photoFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      photoFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openIDGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      governmentIDFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openIDCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      governmentIDFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openCompanyIDGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      companyID = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openCompanyIDCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      companyID = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openUtilityBillGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      utilityBill = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openUtilityBillCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      utilityBill = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openShopCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      shopFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openShopGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      shopFile = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openShopReceiptCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      shopReceipt = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openShopReceiptGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      shopReceipt = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openStockCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      stockPhoto = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openStockGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      stockPhoto = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openSignatureCamera(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.camera);
+    this.setState(() {
+      signature = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  void _openSignatureGallery(BuildContext context) async {
+    var picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+    this.setState(() {
+      signature = picture;
+    });
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _showSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get photo from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showIDSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get ID from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openIDGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openIDCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showUtilityBillSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get Utility Bill from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openUtilityBillGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openUtilityBillCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showCompanyIDSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get Company ID from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openCompanyIDGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openCompanyIDCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showShopSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get Shop Photo from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openShopGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openShopCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showShopReceiptSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get Shop Receipt Photo from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openShopReceiptGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openShopReceiptCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showStockSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get Stock Photo from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openStockGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openStockCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
+  Future<void> _showSignatureSelectionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text("Get Signature Photo from..."),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: Text("Gallery"),
+                      onTap: () {
+                        _openSignatureGallery(context);
+                      },
+                    ),
+                    Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: Text("Camera"),
+                      onTap: () {
+                        _openSignatureCamera(context);
+                      },
+                    )
+                  ],
+                ),
+              ));
+        });
+  }
+
   signOut() async {
     //
     //We just clear the shared preferences and redirect to login
@@ -281,7 +716,6 @@ class LoanState extends State<LoanPage>{
     }
   }
 
-
   submitApplication() async {
 //    print('You are submitting...');
     final url = Constants.Routes['CREATE_USER_AND_LOAN'];
@@ -292,6 +726,8 @@ class LoanState extends State<LoanPage>{
       "phone": clientPhone,
       "address": clientAddress,
       "email": clientEmail,
+
+      "photo": convert.base64.encode(photoFile.readAsBytesSync()),
 
       "employment": employment.toString(),
       "employment_type": _selectedEmploymentType,
@@ -319,6 +755,27 @@ class LoanState extends State<LoanPage>{
       "bank_id": _selectedBank,
       "bvn": bvn
     };
+
+    var headerMap = Map<String, String>();
+
+    headerMap['Authorization'] = "Bearer ${_token}";
+
+
+//    var dio = Dio();
+//    FormData formData = new FormData.fromMap(requestBody);
+//    var response = await dio.post(url, data: formData);
+
+//    var request = http.MultipartRequest('POST', Uri.parse(url));
+//    request.files.add(
+//        await http.MultipartFile.fromBytes(
+//            'photo',
+//            File(photoFile).readAsBytesSync(),
+//            filename: 'photo'
+//        )
+//    );
+//    request.headers.addAll(headerMap);
+//    var response = await request.send();
+
 
     var response = await http.post(url, body: requestBody, headers:{HttpHeaders.authorizationHeader: "Bearer ${_token}"} );
     setState(() {
@@ -1037,7 +1494,7 @@ class LoanState extends State<LoanPage>{
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30.0)
                                 ),
-                                hintText: "Employment date",
+                                hintText: "Employment date: YYYY-MM-DD",
                               ),
                               onChanged: (value) => {
                                 clientEmploymentDate = value
@@ -1552,6 +2009,118 @@ class LoanState extends State<LoanPage>{
                   ),
                 )
             ),
+          ///Files upload
+          SingleChildScrollView(
+            child:Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text('User Photo', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showSelectionDialog(context),
+                  child: _setPhotoFile(),
+                ),
+                
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Government ID', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showIDSelectionDialog(context),
+                  child: _setGovernmentIDFile(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Company ID', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showCompanyIDSelectionDialog(context),
+                  child: _setCompanyID(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Utility Bill', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showUtilityBillSelectionDialog(context),
+                  child: _setUtilityBill(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Shop Photo', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showShopSelectionDialog(context),
+                  child: _setShopFile(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Shop Receipt', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showShopReceiptSelectionDialog(context),
+                  child: _setShopReceiptFile(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Shop Stocks', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showStockSelectionDialog(context),
+                  child: _setStockPhotoFile(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(16, 32, 16, 16),
+                    child: Text('Signature', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold))
+                ),
+                GestureDetector(
+                  onTap: () => _showSignatureSelectionDialog(context),
+                  child: _setSignatureFile(),
+                ),
+
+                Padding(
+                    padding: EdgeInsets.fromLTRB(32, 42, 32, 32),
+                    child: Stack(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: FloatingActionButton(
+                            onPressed: () =>
+                                pageController
+                                    .animateToPage(4, duration: Duration(milliseconds: 400), curve: Curves.linear),
+
+                            tooltip: 'Previous page',
+                            child: Icon(Icons.chevron_left),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: FloatingActionButton(
+                            onPressed: () =>
+                                pageController
+                                    .animateToPage(6, duration: Duration(milliseconds: 400), curve: Curves.linear),
+
+                            tooltip: 'Next page',
+                            child: Icon(Icons.chevron_right),
+
+                          ),
+                        ),
+                      ],
+                    )
+
+                )
+              ],
+            )
+          ),
           ///For the preview of information
           SingleChildScrollView(
                 child: Container(
@@ -1582,10 +2151,10 @@ class LoanState extends State<LoanPage>{
                                       ///First name
                                       Padding(
                                           padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-    child: Container(
-                                            width: 150,
-    child: Text('First name:', style: TextStyle(fontWeight: FontWeight.bold))
-    ),
+                                          child: Container(
+                                                   width: 150,
+                                                   child: Text('First name:', style: TextStyle(fontWeight: FontWeight.bold))
+                                          ),
                                       ),
                                       Padding(
                                           padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
@@ -2223,24 +2792,42 @@ class LoanState extends State<LoanPage>{
                             padding: EdgeInsets.all(24.0),
                             child: Column(
                               children: <Widget>[
-                                TextField(
-                                  textInputAction: TextInputAction.search,
-                                  keyboardType: TextInputType.text,
-                                  style: TextStyle(fontSize: 16),
-                                  autofocus: false,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(30.0)
-                                    ),
-                                    hintText: "Search by name, email, or phone number",
-                                  ),
-                                  onChanged: (value) => {
-                                    collectionSearch = value
-                                  },
-                                  onSubmitted: (value){
-                                    searchForCollectionMatches(value);
-                                  },
+                                Stack(
+                                  children: <Widget>[
+                                      TextField(
+                                        textInputAction: TextInputAction.search,
+                                        keyboardType: TextInputType.text,
+                                        style: TextStyle(fontSize: 16),
+                                        autofocus: false,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.circular(30.0)
+                                          ),
+                                          hintText: "Search by name, email, or phone number",
+                                        ),
+                                        onChanged: (value) => {
+                                          collectionSearch = value
+                                        },
+                                        onSubmitted: (value){
+                                          searchForCollectionMatches(value);
+                                        },
+                                      ),
+                                      GestureDetector(
+                                          onTap: () => {searchForCollectionMatches(collectionSearch)},
+                                          child: Padding(
+                                              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
+                                              child: Align(
+                                                  heightFactor: 1,
+                                                  alignment: Alignment.bottomRight,
+                                                  child: Icon(Icons.search, size: 32)
+                                              )
+                                          )
+                                      )
+
+
+                                  ]
                                 ),
+
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 0.0, vertical: 32.0),
                                   child: ListView(

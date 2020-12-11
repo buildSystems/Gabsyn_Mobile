@@ -26,6 +26,7 @@ dependencies:
   shared_preferences: ^0.5.10
   http: ^0.12.2
   number_display: 2.3.0
+  dio: 3.0.10
 
 
 
@@ -36,6 +37,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  camera: 0.5.8+5
+  path_provider:
+  path:
+  image_picker:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
