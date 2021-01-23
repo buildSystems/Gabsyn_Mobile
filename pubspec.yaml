@@ -27,6 +27,7 @@ dependencies:
   http: ^0.12.2
   number_display: 2.3.0
   dio: 3.0.10
+  flutter_masked_text: ^0.8.0
 
 
 

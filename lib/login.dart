@@ -130,16 +130,18 @@ class LoginState extends State<Login>{
 
       // TODO: implement build
 
-      if(username.isEmpty){
-        _scaffold.currentState.showSnackBar(SnackBar(content: Text("You didn't enter your username")));
-        return;
-      }
-      if(password.isEmpty){
-        _scaffold.currentState.showSnackBar(SnackBar(content: Text("You didn't enter your password")));
-        return;
-      }
+      // if(username.isEmpty){
+      //   _scaffold.currentState.showSnackBar(SnackBar(content: Text("You didn't enter your username")));
+      //   return;
+      // }
+      // if(password.isEmpty){
+      //   _scaffold.currentState.showSnackBar(SnackBar(content: Text("You didn't enter your password")));
+      //   return;
+      // }
 
-      _attemptLogin(username, password);
+      // _attemptLogin(username, password);
+
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoanPage()));
 
     }
 
